@@ -1,0 +1,229 @@
+* {
+  box-sizing: border-box;
+}
+body, html {
+  margin: 0; 
+  padding: 0; 
+  height: 100%;
+  font-family: Consolas, "Courier New", monospace;
+  background-color: #121212;
+  color: #d0d0d0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  user-select: none;
+}
+.message, 
+textarea, 
+input, 
+label {
+  user-select: text;
+}
+
+#app-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 100%;
+  max-width: 700px;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  overflow: hidden;
+}
+
+header {
+  padding: 16px 24px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 1px solid #333;
+  color: #bbb;
+  font-family: monospace, monospace;
+}
+
+#chat-container {
+  flex-grow: 1;
+  padding: 16px 24px;
+  overflow-y: auto;
+  background-color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #ccc;
+  scrollbar-width: thin;
+  scrollbar-color: #555 transparent;
+}
+
+#chat-container::-webkit-scrollbar {
+  width: 8px;
+}
+#chat-container::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 0;
+}
+
+.message {
+  max-width: 75%;
+  padding: 14px 20px;
+  border-radius: 2px;
+  background-color: #2b2b2b;
+  color: #ccc;
+  white-space: pre-wrap;
+  font-family: monospace, monospace;
+}
+
+.message.user {
+  background-color: #005a9c;
+  color: #e0e0e0;
+  align-self: flex-end;
+  border-radius: 2px 0 0 2px;
+}
+
+.message.assistant {
+  background-color: #333;
+  color: #ddd;
+  align-self: flex-start;
+  border-radius: 0 2px 2px 0;
+}
+
+form#chat-form {
+  display: flex;
+  gap: 10px;
+  padding: 12px 24px;
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+textarea#question {
+  flex-grow: 1;
+  resize: none;
+  border: 1px solid #444;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: monospace, monospace;
+  background-color: #222;
+  color: #ddd;
+  min-height: 40px;
+  max-height: 140px;
+  outline-offset: 0;
+  border-radius: 2px;
+  transition: border-color 0.2s ease;
+}
+
+textarea#question:focus {
+  border-color: #005a9c;
+  background-color: #111;
+  outline: none;
+}
+
+#feedback-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center; /* wyrównanie pionowe */
+  padding: 6px 0;      /* mniejszy pasek */
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+}
+
+#feedback-container #feedback-text {
+  margin-right: 8px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+#feedback-container .thumb {
+  cursor: pointer;
+  font-size: 1.3rem; /* mniejsze niż domyślne emoji */
+  transition: transform 0.1s ease, color 0.1s ease;
+  color: #ddd;
+}
+
+#feedback-container .thumb:hover {
+  transform: scale(1.2);
+}
+
+#feedback-container .thumb.selected.up {
+  color: #00ff00;
+}
+
+#feedback-container .thumb.selected.down {
+  color: #ff4444;
+}
+
+select#lang {
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 2px;
+  color: #ddd;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: monospace, monospace;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+select#lang:hover, select#lang:focus {
+  border-color: #005a9c;
+  outline: none;
+}
+
+button[type="submit"] {
+  background-color: #005a9c;
+  border: none;
+  color: #e0e0e0;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+button[type="submit"]:hover {
+  background-color: #004080;
+}
+button[type="submit"]:active {
+  background-color: #003060;
+}
+
+a#clear-history {
+  color: #888;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  margin-left: auto;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+a#clear-history:hover {
+  color: #ccc;
+}
+
+/* Responsywność */
+@media (max-width: 600px) {
+  #app-container {
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+  header {
+    font-size: 1.2rem;
+    padding: 12px 20px;
+  }
+  #chat-container {
+    padding: 12px 20px;
+    gap: 8px;
+  }
+  form#chat-form {
+    padding: 10px 20px;
+    gap: 8px;
+  }
+  button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}

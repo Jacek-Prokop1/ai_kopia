@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Consolas, monospace;
+  background: #121212;
+  color: #ddd;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.panel {
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  background: #222;
+  border: 1px solid #444;
+  color: #ddd;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: 2px;
+  min-height: 150px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #005a9c;
+  background: #111;
+}
+
+button {
+  background: #005a9c;
+  border: none;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+button:hover {
+  background: #004080;
+}
+
+.progress-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px 0;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
+}
+
+#progressText {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.section-buttons { margin-top: 20px; }
+.btn-section { padding: 6px 12px; margin-right: 10px; cursor: pointer; }
+.feedback-list { margin-top: 15px; }
+.feedback-item { border: 1px solid #444; padding: 10px; margin-bottom: 8px; cursor: pointer; }
+.feedback-item.confirmed { background-color: #1e3d1e; }
+.feedback-item.rejected { background-color: #3d1e1e; }
+.feedback-details { display: none; background: #222; color: #ddd; padding: 10px; margin-top: 5px; border-radius: 4px; white-space: pre-wrap; font-family: monospace; }
+.btn { padding: 4px 8px; cursor: pointer; border-radius: 2px; border: none; }
+.btn-confirm { background-color: #4caf50; color: white; }
+.btn-reject { background-color: #f44336; color: white; }
+
+
+.chat-style {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  font-family: monospace, monospace;
+}
+
+.message.user {
+  background-color: #005a9c;
+  color: #e0e0e0;
+  align-self: flex-end;
+  border-radius: 8px 2px 8px 2px;
+}
+
+.message.assistant {
+  background-color: #333;
+  color: #ddd;
+  align-self: flex-start;
+  border-radius: 2px 8px 2px 8px;
+}
+
+.message.assistant.confirmed {
+  border: 1px solid #4caf50;
+}
+
+.message.assistant.rejected {
+  border: 1px solid #f44336;
+}
+
+.message .chat-meta {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 4px;
+}

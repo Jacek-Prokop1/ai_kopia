@@ -1,0 +1,31 @@
+<tr class="feedback-row {% if fb.admin_confirmed == True %}confirmed{% elif fb.admin_confirmed == False %}rejected{% endif %}"
+    data-id="{{ fb.id }}"
+    onclick="toggleDetails(this.dataset.id)">
+  <td>{{ fb.id }}</td>
+  <td>{{ fb.user_question[:50] if fb.user_question else '(brak)' }}...</td>
+  <td>{{ fb.ai_response[:50] }}...</td>
+  <td>{{ fb.rating or 'brak' }}</td>
+  <td>{{ fb.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+  <td>
+    {% if fb.admin_confirmed == True %}
+      ✅ Zatwierdzony
+    {% elif fb.admin_confirmed == False %}
+      ❌ Odrzucony
+    {% else %}
+      ⏳ Oczekuje
+    {% endif %}
+  </td>
+</tr>
+
+<tr id="details-{{ fb.id }}" style="display: none;">
+  <td colspan="6">
+    <div class="feedback-details">
+      <strong>Pełna historia:</strong><br>
+      {{ fb.ai_response }}
+      <div style="margin-top: 10px;">
+        <button class="btn btn-confirm" data-id="{{ fb.id }}" onclick="event.stopPropagation(); confirmFeedback(this.dataset.id, true)">Zatwierdź</button>
+        <button class="btn btn-reject" data-id="{{ fb.id }}" onclick="event.stopPropagation(); confirmFeedback(this.dataset.id, false)">Odrzuć</button>
+      </div>
+    </div>
+  </td>
+</tr>

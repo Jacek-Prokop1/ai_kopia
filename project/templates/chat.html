@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Pomoc AI - Chat</title>
+</head>
+<body>
+  <div id="app-container" role="main" aria-label="Chat z Pomocą AI">
+    <header role="banner" aria-label="Pomoc techniczna AI - Chat">Pomoc Techniczna AI</header>
+
+    <!-- Kontener czatu -->
+    <div id="chat-container" aria-live="polite" aria-atomic="false" role="log" tabindex="0">
+      {% if chat %}
+        {% for msg in chat %}
+          <div class="message user"><strong>Ty:</strong><br>{{ msg.user }}</div>
+          <div class="message assistant"><strong>AI:</strong><br>{{ msg.assistant }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Feedback zawsze widoczny -->
+    <div id="feedback-container">
+    <span id="feedback-text">Oceń chat - pomoże to w dalszym rozwoju</span>
+      <i id="thumb-up" class="fa-jelly-fill fa-regular fa-thumbs-up thumb" title="Dobra odpowiedź"></i>
+      <i id="thumb-down" class="fa-jelly-fill fa-regular fa-thumbs-down thumb" title="Zła odpowiedź"></i>
+    </div>
+
+
+    <!-- Ładowanie -->
+    <div id="loading" style="display:none;">AI generuje odpowiedź...</div>
+
+    <!-- Formularz -->
+    <form id="chat-form" autocomplete="off" aria-label="Formularz wysyłania pytania">
+      <textarea
+        name="question"
+        id="question"
+        placeholder="Wpisz pytanie..."
+        rows="1"
+        required
+        aria-required="true"
+        aria-label="Pole tekstowe na pytanie"
+      ></textarea>
+      <select name="lang" id="lang" aria-label="Wybierz język">
+        <option value="pl">Polski</option>
+        <option value="en">English</option>
+      </select>
+      <button type="submit" aria-label="Wyślij pytanie">Wyślij</button>
+      <a href="{{ url_for('chat.clear') }}" id="clear-history">Wyczyść historię</a>
+    </form>
+  </div>
+
+  <!-- Skrypty JS -->
+  <script src="{{ url_for('static', filename='js/chat_script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/chat_feedback.js') }}"></script>
+</body>
+</html>

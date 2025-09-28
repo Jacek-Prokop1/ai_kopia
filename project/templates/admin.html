@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel admina</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_admin.css') }}">
+</head>
+<body>
+  <h1>Panel admina - dodaj wpis</h1>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form class="panel" method="post" action="{{ url_for('admin.save_message') }}">
+    <label for="full_text">Treść (dowolny opis problemu/rozwiązania lub link do PDF):</label><br />
+    <textarea name="full_text" id="full_text" placeholder="Wpisz pełny opis..." rows="6"></textarea><br />
+    <button type="submit">Zapisz</button>
+  </form>
+
+  <div class="progress-container">
+    <progress id="progressBar" value="0" max="100"></progress>
+    <span id="progressText">0 / 0</span>
+  </div>
+
+  <div class="section-buttons">
+    <button id="show-to-review" class="btn-section">Do oceny</button>
+    <button id="show-history" class="btn-section">Historia</button>
+  </div>
+
+  <div id="to-review" class="feedback-list">
+    {% for fb in feedbacks if fb.admin_confirmed is none %}
+      <div class="feedback-item" id="fb-{{ fb.id }}" data-fbid="{{ fb.id }}">
+        <strong>
+          {{ (fb.user_question[:50] ~ '...') if fb.user_question else '(brak pytania)' }}
+          ({{ fb.created_at.strftime('%Y-%m-%d %H:%M') }})
+          {% if fb.rating %}
+            - Użytkownik ocenił: {{ '✅' if fb.rating=='up' else '❌' }}
+          {% endif %}
+        </strong>
+        <div class="feedback-details">
+          {{ fb.ai_response }}
+          <div style="margin-top: 10px;">
+            <button class="btn btn-confirm" data-fbid="{{ fb.id }}">Zatwierdź</button>
+            <button class="btn btn-reject" data-fbid="{{ fb.id }}">Odrzuć</button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div id="history" class="feedback-list" style="display:none;">
+    {% for fb in feedbacks if fb.admin_confirmed is not none %}
+      <div class="feedback-item {% if fb.admin_confirmed %}confirmed{% else %}rejected{% endif %}" id="fb-{{ fb.id }}" data-fbid="{{ fb.id }}">
+        <strong>
+          {{ (fb.user_question[:50] ~ '...') if fb.user_question else '(brak pytania)' }}
+          ({{ fb.created_at.strftime('%Y-%m-%d %H:%M') }})
+          {% if fb.rating %}
+            - Użytkownik ocenił: {{ '✅' if fb.rating=='up' else '❌' }}
+          {% endif %}
+        </strong>
+        <div class="feedback-details">
+          {{ fb.ai_response }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script src="{{ url_for('static', filename='js/progress.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/admin_feedback.js') }}"></script>
+</body>
+</html>
